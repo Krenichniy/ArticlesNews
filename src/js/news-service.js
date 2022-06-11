@@ -1,3 +1,6 @@
+const API_KEY = 'bc81098602d242d283217f81a2354d33';
+const BASE_URL = 'http://newsapi.org/v2';
+
 export default class NewspiService {
   constructor() {
     this.searchQuery = '';
@@ -7,17 +10,17 @@ export default class NewspiService {
   fetchArticles() {
     const options = {
       headers: {
-        Authorization: 'bc81098602d242d283217f81a2354d33',
+        Authorization: API_KEY,
       },
     };
 
-    const url = `http://newsapi.org/v2/everything?q=${this.searchQuery}&language=en&pageSize=5&page=${this.page}`;
+    const url = `${BASE_URL}/everything?q=${this.searchQuery}&language=en&pageSize=5&page=${this.page}`;
 
     return fetch(url, options)
       .then(response => response.json())
-      .then(data => {
+      .then(({ articles }) => {
         this.page += 1;
-        return data.articles;
+        return articles;
       });
   }
 
